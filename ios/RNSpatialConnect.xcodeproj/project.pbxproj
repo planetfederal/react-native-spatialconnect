@@ -267,8 +267,8 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../node_modules/react-native/React/**",
-					"$(SRCROOT)/../../node_modules/react-native-maps/ios/**",
+					"$(SRCROOT)/../../../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../../node_modules/react-native-maps/ios/**",
 					"$(SRCROOT)/Carthage/Checkouts/spatialconnect-ios-sdk/include/**",
 				);
 				LIBRARY_SEARCH_PATHS = "";
@@ -283,8 +283,8 @@
 			buildSettings = {
 				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
 				HEADER_SEARCH_PATHS = (
-					"$(SRCROOT)/../../node_modules/react-native/React/**",
-					"$(SRCROOT)/../../node_modules/react-native-maps/ios/**",
+					"$(SRCROOT)/../../../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../../node_modules/react-native-maps/ios/**",
 					"$(SRCROOT)/Carthage/Checkouts/spatialconnect-ios-sdk/include/**",
 				);
 				LIBRARY_SEARCH_PATHS = "";

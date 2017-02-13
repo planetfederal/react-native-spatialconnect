@@ -64,36 +64,34 @@ RCT_EXPORT_METHOD(addRasterLayers:(NSArray *)storeIds)
 
 RCT_EXPORT_METHOD(handler:(NSDictionary *)action)
 {
-  NSLog(@"action %@", action);
+  NSString *type = action[@"responseId"] != nil ? action[@"responseId"] : [action[@"type"] stringValue];
   [[bridgeAPI parseJSAction:action] subscribeNext:^(NSDictionary *payload) {
-    NSDictionary *newAction =
-    @{ @"type" : action[@"type"],
-       @"payload" : payload };
-    [self sendEvent:newAction status:SCJSSTATUS_NEXT];
-  }
-                                            error:^(NSError *error) {
-                                              NSDictionary *newAction = @{
-                                                                          @"type" : action[@"type"],
-                                                                          @"payload" : [error localizedDescription]
-                                                                          };
-                                              [self sendEvent:newAction status:SCJSSTATUS_ERROR];
-                                            }
-                                        completed:^{
-                                          NSDictionary *completed = @{ @"type" : action[@"type"] };
-                                          [self sendEvent:completed status:SCJSSTATUS_COMPLETED];
-                                        }];
+    NSDictionary *newAction = @{
+                                @"type" : action[@"type"],
+                                @"payload" : payload
+                                };
+    [self sendEvent:newAction status:SCJSSTATUS_NEXT type:type];
+  } error:^(NSError *error) {
+    NSDictionary *newAction = @{
+                                @"type" : action[@"type"],
+                                @"payload" : [error localizedDescription]
+                                };
+    [self sendEvent:newAction status:SCJSSTATUS_ERROR type:type];
+  } completed:^{
+    NSDictionary *completed = @{
+                                @"type" : action[@"type"]
+                                };
+    [self sendEvent:completed status:SCJSSTATUS_COMPLETED type:type];
+  }];
 }
 
--(void)sendEvent:(NSDictionary *)newAction status:(NSInteger)status {
-  NSString *type = newAction[@"responseId"] != nil ? newAction[@"responseId"] : [newAction[@"type"] stringValue];
+-(void)sendEvent:(NSDictionary *)newAction status:(NSInteger)status type:(NSString *)type {
   if (status == SCJSSTATUS_COMPLETED) {
     type = [type stringByAppendingString:@"_completed"];
   }
   if (status == SCJSSTATUS_ERROR) {
     type = [type stringByAppendingString:@"_error"];
   }
-  //NSLog(@"newAction %@", newAction);
-  //NSLog(@"type %@", type);
   [self.bridge.eventDispatcher sendAppEventWithName:type body:newAction];
 }
 
