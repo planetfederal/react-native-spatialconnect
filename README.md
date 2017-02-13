@@ -9,7 +9,7 @@
 * Move `RNSpatialConnect.xcodeproj` located in `.node_modules/react-native-spatialconnect/ios`
   using drag & drop to `Libraries` folder in your project.
 * In general settings of a target add `libRNSpatialConnect.a` to Linked Frameworks and Libraries.
-* In `Build Settings`/`Search Paths`/`Framework search paths` add path: `$(SRCROOT)/../node_modules/react-native-spatialconnect/ios/Carthage/Build/iOS`.  
+* In `Build Settings`/`Search Paths`/`Framework search paths` add path: `$(SRCROOT)/../node_modules/react-native-spatialconnect/ios/Carthage/Build/iOS`.
 * In `Build Settings`/`Build Options`/`Always Embed Swift Standard Libraries` set to `Yes`.
 * In `Build Phases` click on top left button and add `New Run Script Phase`.
   * Shell command: `/usr/local/bin/carthage copy-frameworks`
