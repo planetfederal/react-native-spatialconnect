@@ -1,0 +1,27 @@
+{
+  "name": "react-native-spatialconnect",
+  "version": "0.8.0",
+  "description": "React Native library for SpatialConnect",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/boundlessgeo/react-native-spatialconnect.git"
+  },
+  "author": "Frank Rowe <fsrowe@gmail.com> (http://frankrowe.org/)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/boundlessgeo/react-native-spatialconnect/issues"
+  },
+  "homepage": "https://github.com/boundlessgeo/react-native-spatialconnect#readme",
+  "peerDependencies": {
+    "react": "15.4.2",
+    "react-native": "0.39.2",
+    "react-native-maps": "0.12.4"
+  },
+  "dependencies": {
+    "spatialconnect": "0.7.1"
+  }
+}
