@@ -26,3 +26,10 @@
 * Minimal supported version of iOS is 8.0
 
 **Android:**
+* Modify `settings.gradle` located in `./android` folder.
+  * Add the following:
+    * `include ':react-native-spatialconnect'`
+    * `project(':react-native-spatialconnect').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-spatialconnect/android')`
+* Modify `build.gradle` located in `./android/app` folder.
+  * Add the following under the dependencies:
+    * `compile project(':react-native-spatialconnect')`
