@@ -48,7 +48,7 @@ RCT_EXPORT_METHOD(bindMapView:(nonnull NSNumber *)reactTag)
 RCT_EXPORT_METHOD(addRasterLayers:(NSArray *)storeIds)
 {
   [mapView removeOverlays:mapView.overlays];
-  NSArray *stores = [[[SpatialConnect sharedInstance] dataService] storesByProtocol:@protocol(SCRasterStore)];
+  NSArray *stores = [[[SpatialConnect sharedInstance] dataService] storesByProtocolArray:@protocol(SCRasterStore)];
   [[[[[[stores rac_sequence] signal] filter:^BOOL(SCDataStore *store) {
     return [storeIds containsObject:store.storeId] && [((id<SCRasterStore>)store).rasterLayers count] > 0;
   }] map:^RACTuple*(SCDataStore *store) {
