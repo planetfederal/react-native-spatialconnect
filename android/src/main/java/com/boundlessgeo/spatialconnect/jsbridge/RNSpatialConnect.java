@@ -14,6 +14,8 @@
  */
 package com.boundlessgeo.spatialconnect.jsbridge;
 
+import android.content.Context;
+import android.content.res.Resources;
 import android.location.Location;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -66,6 +68,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -156,6 +162,28 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                 }
             }
         });
+    }
+
+    @ReactMethod
+    public void addConfigFilepath(final String path) {
+      try {
+          Resources resources = getReactApplicationContext().getResources();
+          //remove ext from file name
+          String fileName = path.substring(0, path.indexOf("."));
+          InputStream is = resources.openRawResource(resources.getIdentifier(fileName,
+                          "raw", getReactApplicationContext().getPackageName()));
+          // write the file to the internal storage location
+          FileOutputStream fos = reactContext.openFileOutput("config.scfg", Context.MODE_PRIVATE);
+          byte[] data = new byte[is.available()];
+          is.read(data);
+          fos.write(data);
+          is.close();
+          fos.close();
+      }
+      catch (IOException e) {
+          e.printStackTrace();
+          Log.e(LOG_TAG, "error in addConfigFilepath " + e.getMessage());
+      }
     }
 
     /**
@@ -407,13 +435,19 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
      */
     private void handleLoginStatus(final ReadableMap message) {
         Log.d(LOG_TAG, "Handling AUTHSERVICE_LOGIN_STATUS message " + message.toString());
-        SCAuthService authService = SpatialConnect.getInstance().getAuthService();
-        authService.getLoginStatus().subscribe(new Action1<Integer>() {
-            @Override
-            public void call(Integer status) {
-                sendEvent(message.getInt("type"), status);
-            }
-        });
+        sc.serviceRunning(SCAuthService.serviceId())
+                .subscribe(new Action1<SCServiceStatusEvent>() {
+                    @Override
+                    public void call(SCServiceStatusEvent scServiceStatusEvent) {
+                      SCAuthService authService = SpatialConnect.getInstance().getAuthService();
+                      authService.getLoginStatus().subscribe(new Action1<Integer>() {
+                          @Override
+                          public void call(Integer status) {
+                              sendEvent(message.getInt("type"), status);
+                          }
+                      });
+                    }
+                });
     }
 
     private void handleAccessToken(ReadableMap message) {
