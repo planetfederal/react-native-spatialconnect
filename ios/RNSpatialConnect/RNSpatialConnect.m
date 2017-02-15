@@ -49,14 +49,12 @@ RCT_EXPORT_METHOD(addRasterLayers:(NSArray *)storeIds)
 {
   [mapView removeOverlays:mapView.overlays];
   NSArray *stores = [[[SpatialConnect sharedInstance] dataService] storesByProtocolArray:@protocol(SCRasterStore)];
-  [[[[[[stores rac_sequence] signal] filter:^BOOL(SCDataStore *store) {
+  [[[[[stores rac_sequence] signal] filter:^BOOL(SCDataStore *store) {
     return [storeIds containsObject:store.storeId] && [((id<SCRasterStore>)store).rasterLayers count] > 0;
-  }] map:^RACTuple*(SCDataStore *store) {
-    return [RACTuple tupleWithObjects:store.storeId, ((id<SCRasterStore>)store).rasterLayers, nil];
-  }] deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(RACTuple *t) {
+  }] deliverOn:[RACScheduler mainThreadScheduler]] subscribeNext:^(SCDataStore *store) {
     id<SCRasterStore> rs =
-    (id<SCRasterStore>)[[[SpatialConnect sharedInstance] dataService] storeByIdentifier:[t first]];
-    for (id layer in [t second]) {
+    (id<SCRasterStore>)[[[SpatialConnect sharedInstance] dataService] storeByIdentifier:store.storeId];
+    for (id layer in rs.rasterLayers) {
       [rs overlayFromLayer:layer mapview:(AIRMap *)mapView];
     }
   }];
