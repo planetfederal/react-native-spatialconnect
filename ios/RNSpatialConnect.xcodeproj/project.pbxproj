@@ -1,0 +1,321 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		540F8AED1E522C9F0082F908 /* RNSpatialConnect.m in Sources */ = {isa = PBXBuildFile; fileRef = 540F8AEC1E522C9F0082F908 /* RNSpatialConnect.m */; };
+		540F8AEE1E522C9F0082F908 /* RNSpatialConnect.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 540F8AEB1E522C9F0082F908 /* RNSpatialConnect.h */; };
+		540F8AFF1E5230700082F908 /* CocoaLumberjack.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540F8AF51E5230700082F908 /* CocoaLumberjack.framework */; };
+		540F8B001E5230700082F908 /* JWT_iOS_Framework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540F8AF61E5230700082F908 /* JWT_iOS_Framework.framework */; };
+		540F8B021E5230700082F908 /* libgpkgios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540F8AF81E5230700082F908 /* libgpkgios.framework */; };
+		540F8B031E5230700082F908 /* MQTTFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540F8AF91E5230700082F908 /* MQTTFramework.framework */; };
+		540F8B041E5230700082F908 /* proj4.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540F8AFA1E5230700082F908 /* proj4.framework */; };
+		540F8B051E5230700082F908 /* ReactiveCocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540F8AFB1E5230700082F908 /* ReactiveCocoa.framework */; };
+		540F8B061E5230700082F908 /* SpatialConnect.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540F8AFC1E5230700082F908 /* SpatialConnect.framework */; };
+		540F8B071E5230700082F908 /* wkb_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540F8AFD1E5230700082F908 /* wkb_ios.framework */; };
+		540F8B081E5230700082F908 /* ZipZap.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 540F8AFE1E5230700082F908 /* ZipZap.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		540F8AE61E522C9F0082F908 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				540F8AEE1E522C9F0082F908 /* RNSpatialConnect.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		540F8AE81E522C9F0082F908 /* libRNSpatialConnect.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNSpatialConnect.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		540F8AEB1E522C9F0082F908 /* RNSpatialConnect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RNSpatialConnect.h; sourceTree = "<group>"; };
+		540F8AEC1E522C9F0082F908 /* RNSpatialConnect.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RNSpatialConnect.m; sourceTree = "<group>"; };
+		540F8AF51E5230700082F908 /* CocoaLumberjack.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CocoaLumberjack.framework; path = Carthage/Build/iOS/CocoaLumberjack.framework; sourceTree = "<group>"; };
+		540F8AF61E5230700082F908 /* JWT_iOS_Framework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JWT_iOS_Framework.framework; path = Carthage/Build/iOS/JWT_iOS_Framework.framework; sourceTree = "<group>"; };
+		540F8AF81E5230700082F908 /* libgpkgios.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = libgpkgios.framework; path = Carthage/Build/iOS/libgpkgios.framework; sourceTree = "<group>"; };
+		540F8AF91E5230700082F908 /* MQTTFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MQTTFramework.framework; path = Carthage/Build/iOS/MQTTFramework.framework; sourceTree = "<group>"; };
+		540F8AFA1E5230700082F908 /* proj4.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = proj4.framework; path = Carthage/Build/iOS/proj4.framework; sourceTree = "<group>"; };
+		540F8AFB1E5230700082F908 /* ReactiveCocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ReactiveCocoa.framework; path = Carthage/Build/iOS/ReactiveCocoa.framework; sourceTree = "<group>"; };
+		540F8AFC1E5230700082F908 /* SpatialConnect.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SpatialConnect.framework; path = Carthage/Build/iOS/SpatialConnect.framework; sourceTree = "<group>"; };
+		540F8AFD1E5230700082F908 /* wkb_ios.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = wkb_ios.framework; path = Carthage/Build/iOS/wkb_ios.framework; sourceTree = "<group>"; };
+		540F8AFE1E5230700082F908 /* ZipZap.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ZipZap.framework; path = Carthage/Build/iOS/ZipZap.framework; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		540F8AE51E522C9F0082F908 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				540F8AFF1E5230700082F908 /* CocoaLumberjack.framework in Frameworks */,
+				540F8B001E5230700082F908 /* JWT_iOS_Framework.framework in Frameworks */,
+				540F8B021E5230700082F908 /* libgpkgios.framework in Frameworks */,
+				540F8B031E5230700082F908 /* MQTTFramework.framework in Frameworks */,
+				540F8B041E5230700082F908 /* proj4.framework in Frameworks */,
+				540F8B051E5230700082F908 /* ReactiveCocoa.framework in Frameworks */,
+				540F8B061E5230700082F908 /* SpatialConnect.framework in Frameworks */,
+				540F8B071E5230700082F908 /* wkb_ios.framework in Frameworks */,
+				540F8B081E5230700082F908 /* ZipZap.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		540F8ADF1E522C9F0082F908 = {
+			isa = PBXGroup;
+			children = (
+				540F8AEA1E522C9F0082F908 /* RNSpatialConnect */,
+				540F8AE91E522C9F0082F908 /* Products */,
+				540F8AF41E5230700082F908 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		540F8AE91E522C9F0082F908 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				540F8AE81E522C9F0082F908 /* libRNSpatialConnect.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		540F8AEA1E522C9F0082F908 /* RNSpatialConnect */ = {
+			isa = PBXGroup;
+			children = (
+				540F8AEB1E522C9F0082F908 /* RNSpatialConnect.h */,
+				540F8AEC1E522C9F0082F908 /* RNSpatialConnect.m */,
+			);
+			path = RNSpatialConnect;
+			sourceTree = "<group>";
+		};
+		540F8AF41E5230700082F908 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				540F8AF51E5230700082F908 /* CocoaLumberjack.framework */,
+				540F8AF61E5230700082F908 /* JWT_iOS_Framework.framework */,
+				540F8AF81E5230700082F908 /* libgpkgios.framework */,
+				540F8AF91E5230700082F908 /* MQTTFramework.framework */,
+				540F8AFA1E5230700082F908 /* proj4.framework */,
+				540F8AFB1E5230700082F908 /* ReactiveCocoa.framework */,
+				540F8AFC1E5230700082F908 /* SpatialConnect.framework */,
+				540F8AFD1E5230700082F908 /* wkb_ios.framework */,
+				540F8AFE1E5230700082F908 /* ZipZap.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		540F8AE71E522C9F0082F908 /* RNSpatialConnect */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 540F8AF11E522C9F0082F908 /* Build configuration list for PBXNativeTarget "RNSpatialConnect" */;
+			buildPhases = (
+				540F8AE41E522C9F0082F908 /* Sources */,
+				540F8AE51E522C9F0082F908 /* Frameworks */,
+				540F8AE61E522C9F0082F908 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = RNSpatialConnect;
+			productName = RNSpatialConnect;
+			productReference = 540F8AE81E522C9F0082F908 /* libRNSpatialConnect.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		540F8AE01E522C9F0082F908 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = "Boundless Spatial";
+				TargetAttributes = {
+					540F8AE71E522C9F0082F908 = {
+						CreatedOnToolsVersion = 8.2.1;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 540F8AE31E522C9F0082F908 /* Build configuration list for PBXProject "RNSpatialConnect" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 540F8ADF1E522C9F0082F908;
+			productRefGroup = 540F8AE91E522C9F0082F908 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				540F8AE71E522C9F0082F908 /* RNSpatialConnect */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		540F8AE41E522C9F0082F908 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				540F8AED1E522C9F0082F908 /* RNSpatialConnect.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		540F8AEF1E522C9F0082F908 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		540F8AF01E522C9F0082F908 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		540F8AF21E522C9F0082F908 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../../node_modules/react-native-maps/ios/**",
+					"$(SRCROOT)/Carthage/Checkouts/spatialconnect-ios-sdk/include/**",
+				);
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		540F8AF31E522C9F0082F908 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(PROJECT_DIR)/Carthage/Build/iOS";
+				HEADER_SEARCH_PATHS = (
+					"$(SRCROOT)/../../../node_modules/react-native/React/**",
+					"$(SRCROOT)/../../../node_modules/react-native-maps/ios/**",
+					"$(SRCROOT)/Carthage/Checkouts/spatialconnect-ios-sdk/include/**",
+				);
+				LIBRARY_SEARCH_PATHS = "";
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		540F8AE31E522C9F0082F908 /* Build configuration list for PBXProject "RNSpatialConnect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				540F8AEF1E522C9F0082F908 /* Debug */,
+				540F8AF01E522C9F0082F908 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		540F8AF11E522C9F0082F908 /* Build configuration list for PBXNativeTarget "RNSpatialConnect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				540F8AF21E522C9F0082F908 /* Debug */,
+				540F8AF31E522C9F0082F908 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 540F8AE01E522C9F0082F908 /* Project object */;
+}
