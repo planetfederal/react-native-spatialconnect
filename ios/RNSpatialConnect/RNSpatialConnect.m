@@ -10,6 +10,7 @@
 #import "RCTBridge.h"
 #import "RCTEventDispatcher.h"
 #import "RCTUIManager.h"
+#import <SpatialConnect/SCTileOverlay.h>
 
 @implementation RNSpatialConnect
 
@@ -31,15 +32,17 @@ RCT_EXPORT_METHOD(addConfigFilepath:(NSString *)p)
 }
 
 
-RCT_EXPORT_METHOD(bindMapView:(nonnull NSNumber *)reactTag)
+RCT_EXPORT_METHOD(bindMapView:(nonnull NSNumber *)reactTag callback:(RCTResponseSenderBlock)callback)
 {
   dispatch_async(RCTGetUIManagerQueue(), ^{
     [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
       id view = viewRegistry[reactTag];
       if (![view isKindOfClass:[AIRMap class]]) {
         RCTLogError(@"Invalid view returned from registry, expecting AIRMap, got: %@", view);
+        callback(@[@"Invalid view returned from registry, expecting AIRMap"]);
       } else {
         mapView = (AIRMap *)view;
+        callback(@[[NSNull null], @"success"]);
       }
     }];
   });
@@ -47,7 +50,10 @@ RCT_EXPORT_METHOD(bindMapView:(nonnull NSNumber *)reactTag)
 
 RCT_EXPORT_METHOD(addRasterLayers:(NSArray *)storeIds)
 {
-  [mapView removeOverlays:mapView.overlays];
+  NSArray *overlays = [[[[mapView.overlays rac_sequence] signal] filter:^BOOL(id overlay) {
+    return [overlay isKindOfClass:[SCTileOverlay class]];
+  }] toArray];
+  [mapView removeOverlays:overlays];
   NSArray *stores = [[[SpatialConnect sharedInstance] dataService] storesByProtocolArray:@protocol(SCRasterStore)];
   [[[[[stores rac_sequence] signal] filter:^BOOL(SCDataStore *store) {
     return [storeIds containsObject:store.storeId] && [((id<SCRasterStore>)store).rasterLayers count] > 0;

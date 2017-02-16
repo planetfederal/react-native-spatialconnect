@@ -44,6 +44,7 @@ import com.boundlessgeo.spatialconnect.stores.ISCSpatialStore;
 import com.boundlessgeo.spatialconnect.stores.SCStoreStatusEvent;
 import com.boundlessgeo.spatialconnect.tiles.GpkgRasterSource;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -111,7 +112,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void bindMapView(final int tag) {
+    public void bindMapView(final int tag, final Callback successCallback) {
         UIManagerModule uiManager = this.reactContext.getNativeModule(UIManagerModule.class);
         uiManager.addUIBlock(new UIBlock() {
             public void execute (NativeViewHierarchyManager nvhm) {
@@ -121,6 +122,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                     @Override
                     public void onMapReady(final GoogleMap googleMap) {
                       setMapView(googleMap);
+                      successCallback.invoke(false, "success");
                     }
                 });
             }
