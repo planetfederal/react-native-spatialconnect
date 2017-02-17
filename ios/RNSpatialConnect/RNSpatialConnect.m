@@ -37,11 +37,11 @@ RCT_EXPORT_METHOD(bindMapView:(nonnull NSNumber *)reactTag callback:(RCTResponse
   dispatch_async(RCTGetUIManagerQueue(), ^{
     [self.bridge.uiManager addUIBlock:^(__unused RCTUIManager *uiManager, NSDictionary<NSNumber *, UIView *> *viewRegistry) {
       id view = viewRegistry[reactTag];
-      if (![view isKindOfClass:[AIRMap class]]) {
-        RCTLogError(@"Invalid view returned from registry, expecting AIRMap, got: %@", view);
-        callback(@[@"Invalid view returned from registry, expecting AIRMap"]);
+      if (![view isKindOfClass:[MKMapView class]]) {
+        RCTLogError(@"Invalid view returned from registry, expecting MKMapView, got: %@", view);
+        callback(@[@"Invalid view returned from registry, expecting MKMapView"]);
       } else {
-        mapView = (AIRMap *)view;
+        mapView = (MKMapView *)view;
         callback(@[[NSNull null], @"success"]);
       }
     }];
@@ -61,7 +61,7 @@ RCT_EXPORT_METHOD(addRasterLayers:(NSArray *)storeIds)
     id<SCRasterStore> rs =
     (id<SCRasterStore>)[[[SpatialConnect sharedInstance] dataService] storeByIdentifier:store.storeId];
     for (id layer in rs.rasterLayers) {
-      [rs overlayFromLayer:layer mapview:(AIRMap *)mapView];
+      [rs overlayFromLayer:layer mapview:mapView];
     }
   }];
 }
