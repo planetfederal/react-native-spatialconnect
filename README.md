@@ -1,17 +1,28 @@
 # react-native-spatialconnect
 
+react-native-spatialconnect is Javascript library used to integrate SpatialConnect with your React Native applications. 
+
+## Prerequisites 
+For iOS, you need to have [Carthage](https://github.com/Carthage/Carthage) and [Xcode](https://developer.apple.com/xcode/) installed on your system. 
+
 ## Configuration & Installation
 
+From the root directory of your React Native app, you can install by running:
+
+```
+npm install react-native-spatialconnect --save
+```
+
+> Note: this may take a few minutes to download and compile all the dependencies.
+
 **iOS:**
-* Make sure that you have [Carthage](https://github.com/Carthage/Carthage) installed on your system.
-* Run `npm install react-native-spatialconnect --save`
-* Open iOS project located in `./ios` folder.
-* Move `RNSpatialConnect.xcodeproj` located in `.node_modules/react-native-spatialconnect/ios`
-  using drag & drop to `Libraries` folder in your project.
-* In general settings of a target add `libRNSpatialConnect.a` to Linked Frameworks and Libraries.
+* Open your React Native iOS project in Xcode.
+* Drag `RNSpatialConnect.xcodeproj` located in `.node_modules/react-native-spatialconnect/ios`
+  to the `Libraries` folder of your project in Xcode.
+* In the `General` settings tab of your app under `Linked Frameworks and Libraries`, add `libRNSpatialConnect.a`.
 * In `Build Settings`/`Search Paths`/`Framework search paths` add path: `$(SRCROOT)/../node_modules/react-native-spatialconnect/ios/Carthage/Build/iOS`.
 * In `Build Settings`/`Build Options`/`Always Embed Swift Standard Libraries` set to `Yes`.
-* In `Build Phases` click on top left button and add `New Run Script Phase`.
+* In `Build Phases` click on top left plus (+) button and add `New Run Script Phase`.
   * Shell command: `/usr/local/bin/carthage copy-frameworks`
   * Input Files:
     * `$(SRCROOT)/../node_modules/react-native-spatialconnect/ios/Carthage/Build/iOS/SpatialConnect.framework`
