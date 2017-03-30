@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'maven'
 
 group 'com.boundlessgeo.spatialconnect'
-version '0.8.0'
+version '0.10.0'
 
 def isCi = "true".equals(System.getenv("CI"))
 def preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
@@ -51,7 +51,7 @@ repositories {
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    compile("com.boundlessgeo.spatialconnect:spatialconnect:0.8.0") {
+    compile("com.boundlessgeo.spatialconnect:spatialconnect:0.10.0") {
       exclude module: 'support-v4'
     }
 }
