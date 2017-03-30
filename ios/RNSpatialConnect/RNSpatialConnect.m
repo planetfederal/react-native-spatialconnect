@@ -6,10 +6,10 @@
 //  Copyright © 2017 Boundless Spatial. All rights reserved.
 //
 
-#import "RNSpatialConnect.h"
-#import "RCTBridge.h"
-#import "RCTEventDispatcher.h"
-#import "RCTUIManager.h"
+#import <React/RNSpatialConnect.h>
+#import <React/RCTBridge.h>
+#import <React/RCTEventDispatcher.h>
+#import <React/RCTUIManager.h>
 #import <SpatialConnect/SCTileOverlay.h>
 
 @implementation RNSpatialConnect

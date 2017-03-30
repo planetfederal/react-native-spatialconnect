@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RCTBridgeModule.h"
+#import <React/RCTBridgeModule.h>
 #import <MapKit/MapKit.h>
 #import <ReactiveCocoa/RACSignal.h>
 #import <SpatialConnect/SCJavascriptBridgeAPI.h>
