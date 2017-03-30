@@ -43,6 +43,7 @@ android {
 }
 
 repositories {
+    jcenter()
     mavenCentral()
     maven {
         url "https://repo.eclipse.org/content/repositories/paho-releases/"
