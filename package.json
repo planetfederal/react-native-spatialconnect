@@ -19,7 +19,7 @@
   "homepage": "https://github.com/boundlessgeo/react-native-spatialconnect#readme",
   "peerDependencies": {
     "react": "15.4.2",
-    "react-native": "0.39.2"
+    "react-native": "0.40.0"
   },
   "dependencies": {
     "spatialconnect": "0.9.1"
