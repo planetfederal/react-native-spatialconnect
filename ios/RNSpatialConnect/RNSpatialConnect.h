@@ -7,8 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RCTBridgeModule.h"
-#import "AIRMap.h"
+#import <React/RCTBridgeModule.h>
+#import <MapKit/MapKit.h>
 #import <ReactiveCocoa/RACSignal.h>
 #import <SpatialConnect/SCJavascriptBridgeAPI.h>
 #import <SpatialConnect/SpatialConnect.h>
@@ -16,7 +16,7 @@
 @interface RNSpatialConnect : NSObject <RCTBridgeModule> {
   SpatialConnect *sc;
   SCJavascriptBridgeAPI *bridgeAPI;
-  AIRMap *mapView;
+  MKMapView *mapView;
 }
 
 @end

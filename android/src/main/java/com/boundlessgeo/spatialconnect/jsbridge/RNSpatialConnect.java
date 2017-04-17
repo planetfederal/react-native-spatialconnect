@@ -42,8 +42,10 @@ import com.boundlessgeo.spatialconnect.stores.SCKeyTuple;
 import com.boundlessgeo.spatialconnect.stores.SCRasterStore;
 import com.boundlessgeo.spatialconnect.stores.ISCSpatialStore;
 import com.boundlessgeo.spatialconnect.stores.SCStoreStatusEvent;
+import com.boundlessgeo.spatialconnect.style.SCStyle;
 import com.boundlessgeo.spatialconnect.tiles.GpkgRasterSource;
 import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
@@ -111,7 +113,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     @ReactMethod
-    public void bindMapView(final int tag) {
+    public void bindMapView(final int tag, final Callback successCallback) {
         UIManagerModule uiManager = this.reactContext.getNativeModule(UIManagerModule.class);
         uiManager.addUIBlock(new UIBlock() {
             public void execute (NativeViewHierarchyManager nvhm) {
@@ -121,6 +123,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                     @Override
                     public void onMapReady(final GoogleMap googleMap) {
                       setMapView(googleMap);
+                      successCallback.invoke(false, "success");
                     }
                 });
             }
@@ -909,6 +912,10 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
         params.putString("key", store.getKey());
         params.putInt("status", store.getStatus().ordinal());
         params.putDouble("downloadProgress", store.getDownloadProgress());
+        if (store.getStyle() != null) {
+          params.putMap("style", getStyleMap(store.getStyle()));
+        }
+
         if (store instanceof ISCSpatialStore) {
             WritableArray a = Arguments.createArray();
             for (String vectorLayerName : ((ISCSpatialStore) store).vectorLayers()) {
@@ -923,6 +930,17 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
             }
             params.putArray("rasterLayers", a);
         }
+
+        return params;
+    }
+
+    private WritableMap getStyleMap(SCStyle style) {
+        WritableMap params = Arguments.createMap();
+        params.putString("fillColor", style.getFillColor());
+        params.putDouble("fillOpacity", style.getFillOpacity());
+        params.putString("strokeColor", style.getStrokeColor());
+        params.putDouble("strokeOpacity", style.getStrokeOpacity());
+        params.putString("iconColor", style.getIconColor());
         return params;
     }
 
