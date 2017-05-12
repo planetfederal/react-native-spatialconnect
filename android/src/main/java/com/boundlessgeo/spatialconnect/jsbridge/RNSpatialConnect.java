@@ -31,7 +31,7 @@ import com.boundlessgeo.spatialconnect.mqtt.SCNotification;
 import com.boundlessgeo.spatialconnect.query.SCGeometryPredicateComparison;
 import com.boundlessgeo.spatialconnect.query.SCPredicate;
 import com.boundlessgeo.spatialconnect.query.SCQueryFilter;
-import com.boundlessgeo.schema.SCCommand;
+import com.boundlessgeo.schema.Actions;
 import com.boundlessgeo.spatialconnect.services.authService.SCAuthService;
 import com.boundlessgeo.spatialconnect.services.SCBackendService;
 import com.boundlessgeo.spatialconnect.services.SCSensorService;
@@ -337,57 +337,57 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
         else {
             // parse bridge message to determine command
             String action = message.getString("type");
-            SCCommand command = SCCommand.fromAction(action);
-            if (command.equals(SCCommand.START_ALL_SERVICES)) {
+            Actions command = Actions.fromAction(action);
+            if (command.equals(Actions.START_ALL_SERVICES)) {
                 handleStartAllServices();
             }
-            if (command.equals(SCCommand.SENSORSERVICE_GPS)) {
+            if (command.equals(Actions.SENSORSERVICE_GPS)) {
                 handleSensorServiceGps(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_ACTIVESTORESLIST)) {
+            if (command.equals(Actions.DATASERVICE_ACTIVESTORESLIST)) {
                 handleActiveStoresList(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_ACTIVESTOREBYID)) {
+            if (command.equals(Actions.DATASERVICE_ACTIVESTOREBYID)) {
                 handleActiveStoreById(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_STORELIST)) {
+            if (command.equals(Actions.DATASERVICE_STORELIST)) {
                 handleStoreList(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_QUERY)
-                    || command.equals(SCCommand.DATASERVICE_SPATIALQUERY)) {
+            if (command.equals(Actions.DATASERVICE_QUERY)
+                    || command.equals(Actions.DATASERVICE_SPATIALQUERY)) {
                 handleQuery(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_UPDATEFEATURE)) {
+            if (command.equals(Actions.DATASERVICE_UPDATEFEATURE)) {
                 handleUpdateFeature(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_DELETEFEATURE)) {
+            if (command.equals(Actions.DATASERVICE_DELETEFEATURE)) {
                 handleDeleteFeature(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_CREATEFEATURE)) {
+            if (command.equals(Actions.DATASERVICE_CREATEFEATURE)) {
                 handleCreateFeature(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_FORMLIST)) {
+            if (command.equals(Actions.DATASERVICE_FORMLIST)) {
                 handleFormsList(message);
             }
-            if (command.equals(SCCommand.AUTHSERVICE_AUTHENTICATE)) {
+            if (command.equals(Actions.AUTHSERVICE_AUTHENTICATE)) {
                 handleAuthenticate(message);
             }
-            if (command.equals(SCCommand.AUTHSERVICE_ACCESS_TOKEN)) {
+            if (command.equals(Actions.AUTHSERVICE_ACCESS_TOKEN)) {
                 handleAccessToken(message);
             }
-            if (command.equals(SCCommand.AUTHSERVICE_LOGIN_STATUS)) {
+            if (command.equals(Actions.AUTHSERVICE_LOGIN_STATUS)) {
                 handleLoginStatus(message);
             }
-            if (command.equals(SCCommand.AUTHSERVICE_LOGOUT)) {
+            if (command.equals(Actions.AUTHSERVICE_LOGOUT)) {
                 handleLogout(message);
             }
-            if (command.equals(SCCommand.NOTIFICATIONS)) {
+            if (command.equals(Actions.NOTIFICATIONS)) {
                 handleNotificationSubscribe(message);
             }
-            if (command.equals(SCCommand.BACKENDSERVICE_HTTP_URI)) {
+            if (command.equals(Actions.BACKENDSERVICE_HTTP_URI)) {
                 handleBackendServiceHTTPUri(message);
             }
-            if (command.equals(SCCommand.BACKENDSERVICE_MQTT_CONNECTED)) {
+            if (command.equals(Actions.BACKENDSERVICE_MQTT_CONNECTED)) {
                 handleMqttConnectionStatus(message);
             }
         }
@@ -432,7 +432,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#AUTHSERVICE_LOGIN_STATUS} command.
+     * Handles the {@link Actions#AUTHSERVICE_LOGIN_STATUS} command.
      *
      * @param message
      */
@@ -472,7 +472,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
 
 
     /**
-     * Handles the {@link SCCommand#START_ALL_SERVICES} command.
+     * Handles the {@link Actions#START_ALL_SERVICES} command.
      */
     private void handleStartAllServices() {
         Log.d(LOG_TAG, "Handling START_ALL_SERVICES message");
@@ -480,7 +480,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles all the {@link SCCommand#SENSORSERVICE_GPS} commands.
+     * Handles all the {@link Actions#SENSORSERVICE_GPS} commands.
      *
      * @param message
      */
@@ -508,7 +508,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_ACTIVESTORESLIST} command.
+     * Handles the {@link Actions#DATASERVICE_ACTIVESTORESLIST} command.
      */
     private void handleActiveStoresList(final ReadableMap message) {
         Log.d(LOG_TAG, "Handling DATASERVICE_ACTIVESTORESLIST message");
@@ -547,7 +547,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_FORMLIST} command.
+     * Handles the {@link Actions#DATASERVICE_FORMLIST} command.
      */
     private void handleFormsList(final ReadableMap message) {
         Log.d(LOG_TAG, "Handling DATASERVICE_FORMSLIST message");
@@ -574,7 +574,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles all the {@link SCCommand#DATASERVICE_ACTIVESTOREBYID} commands.
+     * Handles all the {@link Actions#DATASERVICE_ACTIVESTOREBYID} commands.
      *
      * @param message
      */
@@ -586,7 +586,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles all the {@link SCCommand#DATASERVICE_STORELIST} commands.
+     * Handles all the {@link Actions#DATASERVICE_STORELIST} commands.
      *
      * @param message
      */
@@ -603,8 +603,8 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_QUERYALL} and
-     * {@link SCCommand#DATASERVICE_SPATIALQUERYALL} commands.
+     * Handles the {@link Actions#DATASERVICE_QUERYALL} and
+     * {@link Actions#DATASERVICE_SPATIALQUERYALL} commands.
      *
      * @param message
      */
@@ -657,7 +657,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_UPDATEFEATURE} command.
+     * Handles the {@link Actions#DATASERVICE_UPDATEFEATURE} command.
      *
      * @param message
      */
@@ -695,7 +695,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_DELETEFEATURE} command.
+     * Handles the {@link Actions#DATASERVICE_DELETEFEATURE} command.
      *
      * @param message
      */
@@ -732,7 +732,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
 
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_CREATEFEATURE} command.
+     * Handles the {@link Actions#DATASERVICE_CREATEFEATURE} command.
      *
      * @param message
      */
@@ -782,7 +782,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#BACKENDSERVICE_HTTP_URI} command.
+     * Handles the {@link Actions#BACKENDSERVICE_HTTP_URI} command.
      *
      * @param message the message received from the Javascript
      */
@@ -801,7 +801,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#BACKENDSERVICE_MQTT_CONNECTED} command.
+     * Handles the {@link Actions#BACKENDSERVICE_MQTT_CONNECTED} command.
      *
      * @param message the message received from the Javascript
      */
