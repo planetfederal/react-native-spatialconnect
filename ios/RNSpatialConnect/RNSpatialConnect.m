@@ -68,7 +68,7 @@ RCT_EXPORT_METHOD(addRasterLayers:(NSArray *)storeIds)
 
 RCT_EXPORT_METHOD(handler:(NSDictionary *)action)
 {
-  NSString *type = action[@"responseId"] != nil ? action[@"responseId"] : [action[@"type"] stringValue];
+  NSString *type = action[@"responseId"] != nil ? action[@"responseId"] : action[@"type"];
   [[bridgeAPI parseJSAction:action] subscribeNext:^(NSDictionary *payload) {
     NSDictionary *newAction = @{
                                 @"type" : action[@"type"],
