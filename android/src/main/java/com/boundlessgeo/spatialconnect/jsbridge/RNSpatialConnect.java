@@ -31,7 +31,7 @@ import com.boundlessgeo.spatialconnect.mqtt.SCNotification;
 import com.boundlessgeo.spatialconnect.query.SCGeometryPredicateComparison;
 import com.boundlessgeo.spatialconnect.query.SCPredicate;
 import com.boundlessgeo.spatialconnect.query.SCQueryFilter;
-import com.boundlessgeo.spatialconnect.schema.SCCommand;
+import com.boundlessgeo.schema.Actions;
 import com.boundlessgeo.spatialconnect.services.authService.SCAuthService;
 import com.boundlessgeo.spatialconnect.services.SCBackendService;
 import com.boundlessgeo.spatialconnect.services.SCSensorService;
@@ -198,13 +198,13 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
      * .html#sending-events-to-javascript"> https://facebook.github.io/react-native/docs/native-modules-android
      * .html#sending-events-to-javascript</a>
      */
-    public void sendEvent(Integer eventType, @Nullable WritableMap params) {
+    public void sendEvent(String eventType, @Nullable WritableMap params) {
         Log.v(LOG_TAG, String.format("Sending {\"type\": %s, \"payload\": %s} to Javascript",
                         eventType.toString(),
                         params.toString())
         );
         WritableMap newAction = Arguments.createMap();
-        newAction.putInt("type", eventType);
+        newAction.putString("type", eventType);
         newAction.putMap("payload", params);
         this.reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
@@ -221,8 +221,8 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
      * .html#sending-events-to-javascript"> https://facebook.github.io/react-native/docs/native-modules-android
      * .html#sending-events-to-javascript</a>
      */
-    public void sendEvent(Integer eventType, String responseId, @Nullable WritableMap params) {
-        if (eventType != 113) {
+    public void sendEvent(String eventType, String responseId, @Nullable WritableMap params) {
+        if (!eventType.equalsIgnoreCase("v1/DATASERVICE_SPATIALQUERYALL")) {
             Log.v(LOG_TAG, String.format("Sending {\"responseID\": \"%s\", \"type\": %s, \"payload\": %s} to Javascript",
                             responseId,
                             eventType.toString(),
@@ -230,7 +230,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
             );
         }
         WritableMap newAction = Arguments.createMap();
-        newAction.putInt("type", eventType);
+        newAction.putString("type", eventType);
         newAction.putMap("payload", params);
         this.reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
@@ -247,8 +247,8 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
      * .html#sending-events-to-javascript"> https://facebook.github.io/react-native/docs/native-modules-android
      * .html#sending-events-to-javascript</a>
      */
-    public void sendEvent(Integer eventType, String responseId, @Nullable String payloadString) {
-        if (eventType != 113) {
+    public void sendEvent(String eventType, String responseId, @Nullable String payloadString) {
+        if (!eventType.equalsIgnoreCase("v1/DATASERVICE_SPATIALQUERYALL")) {
             Log.v(LOG_TAG, String.format("Sending {\"responseID\": \"%s\", \"type\": %s, \"payload\": %s} to Javascript",
                             responseId,
                             eventType.toString(),
@@ -256,7 +256,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
             );
         }
         WritableMap newAction = Arguments.createMap();
-        newAction.putInt("type", eventType);
+        newAction.putString("type", eventType);
         newAction.putString("payload", payloadString);
         this.reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
@@ -272,13 +272,13 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
      * .html#sending-events-to-javascript"> https://facebook.github.io/react-native/docs/native-modules-android
      * .html#sending-events-to-javascript</a>
      */
-    public void sendEvent(Integer eventType, @Nullable String payloadString) {
+    public void sendEvent(String eventType, @Nullable String payloadString) {
         Log.v(LOG_TAG, String.format("Sending {\"type\": %s, \"payload\": \"%s\"} to Javascript",
                         eventType.toString(),
                         payloadString)
         );
         WritableMap newAction = Arguments.createMap();
-        newAction.putInt("type", eventType);
+        newAction.putString("type", eventType);
         newAction.putString("payload", payloadString);
         this.reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
@@ -294,26 +294,26 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
      * .html#sending-events-to-javascript"> https://facebook.github.io/react-native/docs/native-modules-android
      * .html#sending-events-to-javascript</a>
      */
-    public void sendEvent(Integer eventType, String responseId, @Nullable Integer payloadInteger) {
+    public void sendEvent(String eventType, String responseId, @Nullable Integer payloadInteger) {
         Log.v(LOG_TAG, String.format("Sending {\"type\": %s, \"payload\": %d} to Javascript",
                         eventType.toString(),
                         payloadInteger)
         );
         WritableMap newAction = Arguments.createMap();
-        newAction.putInt("type", eventType);
+        newAction.putString("type", eventType);
         newAction.putInt("payload", payloadInteger);
         this.reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
                 .emit(responseId, newAction);
     }
 
-    public void sendEvent(Integer eventType, @Nullable Integer payloadInteger) {
+    public void sendEvent(String eventType, @Nullable Integer payloadInteger) {
         Log.v(LOG_TAG, String.format("Sending {\"type\": %s, \"payload\": %d} to Javascript",
                 eventType.toString(),
                 payloadInteger)
         );
         WritableMap newAction = Arguments.createMap();
-        newAction.putInt("type", eventType);
+        newAction.putString("type", eventType);
         newAction.putInt("payload", payloadInteger);
         this.reactContext
                 .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
@@ -322,7 +322,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
 
     /**
      * Handles a message sent from Javascript.  Expects the message envelope to look like:
-     * <code>{"type":<integer>,"payload":<JSON Object>}</code>
+     * <code>{"type":<String>,"payload":<JSON Object>}</code>
      *
      * @param message
      */
@@ -336,58 +336,58 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
         }
         else {
             // parse bridge message to determine command
-            Integer actionNumber = message.getInt("type");
-            SCCommand command = SCCommand.fromActionNumber(actionNumber);
-            if (command.equals(SCCommand.START_ALL_SERVICES)) {
+            String action = message.getString("type");
+            Actions command = Actions.fromAction(action);
+            if (command.equals(Actions.START_ALL_SERVICES)) {
                 handleStartAllServices();
             }
-            if (command.equals(SCCommand.SENSORSERVICE_GPS)) {
+            if (command.equals(Actions.SENSORSERVICE_GPS)) {
                 handleSensorServiceGps(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_ACTIVESTORESLIST)) {
+            if (command.equals(Actions.DATASERVICE_ACTIVESTORESLIST)) {
                 handleActiveStoresList(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_ACTIVESTOREBYID)) {
+            if (command.equals(Actions.DATASERVICE_ACTIVESTOREBYID)) {
                 handleActiveStoreById(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_STORELIST)) {
+            if (command.equals(Actions.DATASERVICE_STORELIST)) {
                 handleStoreList(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_QUERY)
-                    || command.equals(SCCommand.DATASERVICE_SPATIALQUERY)) {
+            if (command.equals(Actions.DATASERVICE_QUERY)
+                    || command.equals(Actions.DATASERVICE_SPATIALQUERY)) {
                 handleQuery(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_UPDATEFEATURE)) {
+            if (command.equals(Actions.DATASERVICE_UPDATEFEATURE)) {
                 handleUpdateFeature(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_DELETEFEATURE)) {
+            if (command.equals(Actions.DATASERVICE_DELETEFEATURE)) {
                 handleDeleteFeature(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_CREATEFEATURE)) {
+            if (command.equals(Actions.DATASERVICE_CREATEFEATURE)) {
                 handleCreateFeature(message);
             }
-            if (command.equals(SCCommand.DATASERVICE_FORMLIST)) {
+            if (command.equals(Actions.DATASERVICE_FORMLIST)) {
                 handleFormsList(message);
             }
-            if (command.equals(SCCommand.AUTHSERVICE_AUTHENTICATE)) {
+            if (command.equals(Actions.AUTHSERVICE_AUTHENTICATE)) {
                 handleAuthenticate(message);
             }
-            if (command.equals(SCCommand.AUTHSERVICE_ACCESS_TOKEN)) {
+            if (command.equals(Actions.AUTHSERVICE_ACCESS_TOKEN)) {
                 handleAccessToken(message);
             }
-            if (command.equals(SCCommand.AUTHSERVICE_LOGIN_STATUS)) {
+            if (command.equals(Actions.AUTHSERVICE_LOGIN_STATUS)) {
                 handleLoginStatus(message);
             }
-            if (command.equals(SCCommand.AUTHSERVICE_LOGOUT)) {
+            if (command.equals(Actions.AUTHSERVICE_LOGOUT)) {
                 handleLogout(message);
             }
-            if (command.equals(SCCommand.NOTIFICATIONS)) {
+            if (command.equals(Actions.NOTIFICATIONS)) {
                 handleNotificationSubscribe(message);
             }
-            if (command.equals(SCCommand.BACKENDSERVICE_HTTP_URI)) {
+            if (command.equals(Actions.BACKENDSERVICE_HTTP_URI)) {
                 handleBackendServiceHTTPUri(message);
             }
-            if (command.equals(SCCommand.BACKENDSERVICE_MQTT_CONNECTED)) {
+            if (command.equals(Actions.BACKENDSERVICE_MQTT_CONNECTED)) {
                 handleMqttConnectionStatus(message);
             }
         }
@@ -411,7 +411,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                                         @Override
                                         public void call(SCNotification scNotification) {
                                             try {
-                                                sendEvent(message.getInt("type"), convertJsonToMap(scNotification.toJson()));
+                                                sendEvent(message.getString("type"), convertJsonToMap(scNotification.toJson()));
                                             }
                                             catch (JSONException e) {
                                                 Log.w(LOG_TAG, "Could not parse notification");
@@ -432,7 +432,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#AUTHSERVICE_LOGIN_STATUS} command.
+     * Handles the {@link Actions#AUTHSERVICE_LOGIN_STATUS} command.
      *
      * @param message
      */
@@ -446,7 +446,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                       authService.getLoginStatus().subscribe(new Action1<Integer>() {
                           @Override
                           public void call(Integer status) {
-                              sendEvent(message.getInt("type"), status);
+                              sendEvent(message.getString("type"), status);
                           }
                       });
                     }
@@ -458,7 +458,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
         SCAuthService authService = SpatialConnect.getInstance().getAuthService();
         String accessToken = authService.getAccessToken();
         if (accessToken != null) {
-            sendEvent(message.getInt("type"), accessToken);
+            sendEvent(message.getString("type"), accessToken);
         }
     }
 
@@ -472,7 +472,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
 
 
     /**
-     * Handles the {@link SCCommand#START_ALL_SERVICES} command.
+     * Handles the {@link Actions#START_ALL_SERVICES} command.
      */
     private void handleStartAllServices() {
         Log.d(LOG_TAG, "Handling START_ALL_SERVICES message");
@@ -480,7 +480,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles all the {@link SCCommand#SENSORSERVICE_GPS} commands.
+     * Handles all the {@link Actions#SENSORSERVICE_GPS} commands.
      *
      * @param message
      */
@@ -498,7 +498,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                             WritableMap params = Arguments.createMap();
                             params.putString("lat", String.valueOf(location.getLatitude()));
                             params.putString("lon", String.valueOf(location.getLongitude()));
-                            sendEvent(message.getInt("type"), params);
+                            sendEvent(message.getString("type"), params);
                         }
                     });
         }
@@ -508,7 +508,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_ACTIVESTORESLIST} command.
+     * Handles the {@link Actions#DATASERVICE_ACTIVESTORESLIST} command.
      */
     private void handleActiveStoresList(final ReadableMap message) {
         Log.d(LOG_TAG, "Handling DATASERVICE_ACTIVESTORESLIST message");
@@ -518,7 +518,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                     @Override
                     public void call(Boolean hasStores) {
                         if (hasStores) {
-                            sendEvent(message.getInt("type"), message.getString("responseId"), getActiveStoresPayload());
+                            sendEvent(message.getString("type"), message.getString("responseId"), getActiveStoresPayload());
                         }
                     }
                 });
@@ -547,7 +547,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_FORMLIST} command.
+     * Handles the {@link Actions#DATASERVICE_FORMLIST} command.
      */
     private void handleFormsList(final ReadableMap message) {
         Log.d(LOG_TAG, "Handling DATASERVICE_FORMSLIST message");
@@ -566,7 +566,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                                  formsArray.pushMap(getFormMap(config));
                              }
                              eventPayload.putArray("forms", formsArray);
-                             sendEvent(message.getInt("type"), message.getString("responseId"), eventPayload);
+                             sendEvent(message.getString("type"), message.getString("responseId"), eventPayload);
                          }
                       }
                   });
@@ -574,7 +574,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles all the {@link SCCommand#DATASERVICE_ACTIVESTOREBYID} commands.
+     * Handles all the {@link Actions#DATASERVICE_ACTIVESTOREBYID} commands.
      *
      * @param message
      */
@@ -582,29 +582,29 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
         Log.d(LOG_TAG, "Handling ACTIVESTOREBYID message :" + message.toString());
         String storeId = message.getMap("payload").getString("storeId");
         SCDataStore store = sc.getDataService().getStoreByIdentifier(storeId);
-        sendEvent(message.getInt("type"), getStoreMap(store));
+        sendEvent(message.getString("type"), getStoreMap(store));
     }
 
     /**
-     * Handles all the {@link SCCommand#DATASERVICE_STORELIST} commands.
+     * Handles all the {@link Actions#DATASERVICE_STORELIST} commands.
      *
      * @param message
      */
     private void handleStoreList(final ReadableMap message) {
         Log.d(LOG_TAG, "Handling STORELIST message :" + message.toString());
-        sendEvent(message.getInt("type"), message.getString("responseId"), getAllStoresPayload());
+        sendEvent(message.getString("type"), message.getString("responseId"), getAllStoresPayload());
 
         sc.getDataService().getStoreEvents().subscribe(new Action1<SCStoreStatusEvent>() {
             @Override
             public void call(SCStoreStatusEvent scStoreStatusEvent) {
-                sendEvent(message.getInt("type"), message.getString("responseId"), getAllStoresPayload());
+                sendEvent(message.getString("type"), message.getString("responseId"), getAllStoresPayload());
             }
         });
     }
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_QUERYALL} and
-     * {@link SCCommand#DATASERVICE_SPATIALQUERYALL} commands.
+     * Handles the {@link Actions#DATASERVICE_QUERYALL} and
+     * {@link Actions#DATASERVICE_SPATIALQUERYALL} commands.
      *
      * @param message
      */
@@ -639,7 +639,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                                         String encodedId = ((SCGeometry) feature).getKey().encodedCompositeKey();
                                         feature.setId(encodedId);
                                         sendEvent(
-                                                message.getInt("type"),
+                                                message.getString("type"),
                                                 message.getString("responseId"),
                                                 convertJsonToMap(new JSONObject(feature.toJson()))
                                         );
@@ -657,7 +657,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_UPDATEFEATURE} command.
+     * Handles the {@link Actions#DATASERVICE_UPDATEFEATURE} command.
      *
      * @param message
      */
@@ -695,7 +695,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_DELETEFEATURE} command.
+     * Handles the {@link Actions#DATASERVICE_DELETEFEATURE} command.
      *
      * @param message
      */
@@ -732,7 +732,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
 
 
     /**
-     * Handles the {@link SCCommand#DATASERVICE_CREATEFEATURE} command.
+     * Handles the {@link Actions#DATASERVICE_CREATEFEATURE} command.
      *
      * @param message
      */
@@ -766,7 +766,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                                         // base64 encode id and set it before sending across wire
                                         String encodedId = feature.getKey().encodedCompositeKey();
                                         feature.setId(encodedId);
-                                        sendEvent(message.getInt("type"), message.getString("responseId"),
+                                        sendEvent(message.getString("type"), message.getString("responseId"),
                                                 feature.toJson());
                                     }
                                     catch (UnsupportedEncodingException e) {
@@ -782,7 +782,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
     }
 
     /**
-     * Handles the {@link SCCommand#BACKENDSERVICE_HTTP_URI} command.
+     * Handles the {@link Actions#BACKENDSERVICE_HTTP_URI} command.
      *
      * @param message the message received from the Javascript
      */
@@ -794,14 +794,14 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                         String backendUri = sc.getBackendService().backendUri + "/api/";
                         WritableMap eventPayload = Arguments.createMap();
                         eventPayload.putString("backendUri", backendUri);
-                        sendEvent(message.getInt("type"), message.getString("responseId"), eventPayload);
+                        sendEvent(message.getString("type"), message.getString("responseId"), eventPayload);
                     }
                 });
 
     }
 
     /**
-     * Handles the {@link SCCommand#BACKENDSERVICE_MQTT_CONNECTED} command.
+     * Handles the {@link Actions#BACKENDSERVICE_MQTT_CONNECTED} command.
      *
      * @param message the message received from the Javascript
      */
@@ -827,13 +827,13 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                     public void onNext(Boolean connected) {
                         WritableMap eventPayload = Arguments.createMap();
                         eventPayload.putBoolean("connected", connected);
-                        sendEvent(message.getInt("type"), message.getString("responseId"), eventPayload);
+                        sendEvent(message.getString("type"), message.getString("responseId"), eventPayload);
                     }
                 });
         } else {
             WritableMap eventPayload = Arguments.createMap();
             eventPayload.putBoolean("connected", false);
-            sendEvent(message.getInt("type"), message.getString("responseId"), eventPayload);
+            sendEvent(message.getString("type"), message.getString("responseId"), eventPayload);
         }
     }
 
