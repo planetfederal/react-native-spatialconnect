@@ -9,7 +9,7 @@ def preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '23.0.3'
+    buildToolsVersion '25.0.0'
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 25
@@ -52,7 +52,7 @@ repositories {
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    compile("com.boundlessgeo.spatialconnect:spatialconnect:0.11.0") {
+    compile("com.boundlessgeo.spatialconnect:spatialconnect:0.11.1") {
       exclude module: 'support-v4'
     }
 }
