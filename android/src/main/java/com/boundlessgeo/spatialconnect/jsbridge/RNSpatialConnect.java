@@ -22,7 +22,6 @@ import android.util.Log;
 
 import com.boundlessgeo.spatialconnect.SpatialConnect;
 import com.boundlessgeo.spatialconnect.config.SCFormConfig;
-import com.boundlessgeo.spatialconnect.config.SCFormField;
 import com.boundlessgeo.spatialconnect.geometries.SCBoundingBox;
 import com.boundlessgeo.spatialconnect.geometries.SCGeometry;
 import com.boundlessgeo.spatialconnect.geometries.SCGeometryFactory;
@@ -61,6 +60,7 @@ import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.NativeViewHierarchyManager;
 import com.facebook.react.uimanager.UIBlock;
 import com.facebook.react.uimanager.UIManagerModule;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -79,6 +79,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import rx.Subscriber;
 import rx.functions.Action1;
@@ -953,52 +954,69 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
         params.putString("version", formConfig.getVersion());
         // TODO: put username in metadatadata
         WritableArray fields = Arguments.createArray();
-        // for each field, create a WriteableMap with all the SCFormField params
-        for (SCFormField field : formConfig.getFields()) {
-            WritableMap fieldMap = Arguments.createMap();
-            fieldMap.putString("id", field.getId());
-            fieldMap.putString("field_key", field.getKey());
-            fieldMap.putString("field_label", field.getLabel());
-            if (field.isRequired() != null) {
-                fieldMap.putBoolean("is_required", field.isRequired());
-            }
-            if (field.getPosition() != null) {
-                fieldMap.putInt("order", field.getPosition());
-            }
-            if (field.getType() != null) {
-                fieldMap.putString("type", field.getType());
-            }
-            if (field.getInitialValue() != null) {
-                fieldMap.putString("initial_value", String.valueOf(field.getInitialValue()));
-            }
-            if (field.getMaximum() != null) {
-                fieldMap.putDouble("minimum", Double.valueOf(String.valueOf(field.getMinimum())));
-            }
-            if (field.getMaximum() != null) {
-                fieldMap.putDouble("maximum", Double.valueOf(String.valueOf(field.getMaximum())));
-            }
-            if (field.isExclusiveMaximum() != null) {
-                fieldMap.putBoolean("exclusive_maximum", field.isExclusiveMaximum());
-            }
-            if (field.isExclusiveMinimum() != null) {
-                fieldMap.putBoolean("exclusive_minimum", field.isExclusiveMinimum());
-            }
-            if (field.isInteger() != null) {
-                fieldMap.putBoolean("is_integer", field.isInteger());
-            }
-            if (field.getMaximumLength() != null) {
-                fieldMap.putInt("maximum_length", field.getMaximumLength());
-            }
-            if (field.getMinimumLength() != null) {
-                fieldMap.putInt("minimum_length", field.getMinimumLength());
-            }
-            if (field.getPattern() != null) {
-                fieldMap.putString("pattern", field.getPattern());
-            }
-            fields.pushMap(fieldMap);
+        for (JsonNode jsonNode : formConfig.getFields()) {
+            fields.pushMap(convertJsonToMap(jsonNode));
         }
         params.putArray("fields", fields);
         return params;
+    }
+
+    private static WritableMap convertJsonToMap(JsonNode jsonObject) {
+        WritableMap map = new WritableNativeMap();
+
+        Iterator<Map.Entry<String, JsonNode>> iterator = jsonObject.fields();
+        Map.Entry<String, JsonNode> field;
+        JsonNode value;
+        while (iterator.hasNext()) {
+            field = iterator.next();
+            value = field.getValue();
+            if (value.isContainerNode()) {
+                if (value.isObject()) {
+                    map.putMap(field.getKey(), convertJsonToMap(value));
+                } else if (value.isArray()) {
+                    map.putArray(field.getKey(), convertJsonToArray(value));
+                }
+            } else if (value.isBoolean()) {
+                map.putBoolean(field.getKey(), value.asBoolean());
+            } else if (value.isInt()) {
+                map.putInt(field.getKey(), value.asInt());
+            } else if (value.isDouble()) {
+                map.putDouble(field.getKey(), value.asDouble());
+            } else if (value.isTextual()) {
+                map.putString(field.getKey(), value.asText());
+            } else {
+                map.putString(field.getKey(), value.toString());
+            }
+        }
+        return map;
+    }
+
+    private static WritableArray convertJsonToArray(JsonNode jsonObject) {
+        WritableArray array = new WritableNativeArray();
+
+        Iterator<JsonNode> iterator = jsonObject.elements();
+        JsonNode value;
+        while (iterator.hasNext()) {
+            value = iterator.next();
+            if (value.isContainerNode()) {
+                if (value.isObject()) {
+                    array.pushMap(convertJsonToMap(value));
+                } else if (value.isArray()) {
+                    array.pushArray(convertJsonToArray(value));
+                }
+            } else if (value.isBoolean()) {
+                array.pushBoolean(value.asBoolean());
+            } else if (value.isInt()) {
+                array.pushInt(value.asInt());
+            } else if (value.isDouble()) {
+                array.pushDouble(value.asDouble());
+            } else if (value.isTextual()) {
+                array.pushString(value.asText());
+            } else {
+                array.pushString(value.toString());
+            }
+        }
+        return array;
     }
 
     private static WritableMap convertJsonToMap(JSONObject jsonObject) throws JSONException {
