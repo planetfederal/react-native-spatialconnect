@@ -91,6 +91,7 @@ import rx.schedulers.Schedulers;
 public class RNSpatialConnect extends ReactContextBaseJavaModule {
 
     private static final String LOG_TAG = RNSpatialConnect.class.getSimpleName();
+    private static final String ERROR_TYPE = "_error";
     private final SpatialConnect sc;
     private final ReactContext reactContext;
     private GoogleMap mapView;
@@ -631,6 +632,8 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                                 public void onError(Throwable e) {
                                     Log.e(LOG_TAG, "Could not complete query on all stores\n" + e.getMessage());
                                     e.printStackTrace();
+                                    sendEvent(message.getString("type"), message.getString("responseId") + ERROR_TYPE,
+                                            e.getLocalizedMessage());
                                 }
 
                                 @Override
@@ -662,7 +665,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
      *
      * @param message
      */
-    private void handleUpdateFeature(ReadableMap message) {
+    private void handleUpdateFeature(final ReadableMap message) {
         Log.d(LOG_TAG, "Handling UPDATEFEATURE message :" + message.toString());
         try {
             SCSpatialFeature featureToUpdate = getFeatureToUpdate(
@@ -681,6 +684,8 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                                 @Override
                                 public void onError(Throwable e) {
                                     Log.e(LOG_TAG, "onError()\n" + e.getLocalizedMessage());
+                                    sendEvent(message.getString("type"), message.getString("responseId") + ERROR_TYPE,
+                                            e.getLocalizedMessage());
                                 }
 
                                 @Override
@@ -759,6 +764,8 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                                 public void onError(Throwable e) {
                                     e.printStackTrace();
                                     Log.e(LOG_TAG, "onError()\n" + e.getLocalizedMessage());
+                                    sendEvent(message.getString("type"), message.getString("responseId") + ERROR_TYPE,
+                                            e.getLocalizedMessage());
                                 }
 
                                 @Override
