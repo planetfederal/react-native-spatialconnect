@@ -19,6 +19,7 @@ import android.content.res.Resources;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.boundlessgeo.spatialconnect.SpatialConnect;
 import com.boundlessgeo.spatialconnect.jsbridge.SCJavascriptCommands.SCBridgeStatus;
 import com.boundlessgeo.spatialconnect.stores.GeoPackageStore;
 import com.boundlessgeo.spatialconnect.stores.SCDataStore;
@@ -33,6 +34,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableArray;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.ReadableMapKeySetIterator;
+import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.uimanager.NativeViewHierarchyManager;
@@ -49,6 +51,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import rx.Subscriber;
 
@@ -123,8 +126,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                 for (int index = 0; index < storeIdArray.size(); index++) {
                     storeIds.add(storeIdArray.getString(index));
                 }
-                List<SCDataStore> stores = sc.getDataService().getActiveStores();
-                // TODO address the sc var not existing anymore
+                List<SCDataStore> stores = SpatialConnect.getInstance().getDataService().getActiveStores();
                 for (SCDataStore store : stores) {
                     List<TileOverlay> tiles = tileoverlays.get(store.getStoreId());
                     if (storeIds.contains(store.getStoreId())) {
@@ -166,10 +168,10 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
         }
         Log.d(LOG_TAG, "JS --> sdk " + message.toString());
 
-        String responseId = message.getString("responseId");
+        String responseId = message.hasKey("responseId") ? message.getString("responseId") : null;
         final String type = !TextUtils.isEmpty(responseId) ? responseId : message.getString("type");
 
-        Subscriber subscriber = new Subscriber() {
+        Subscriber<Object> subscriber = new Subscriber<Object>() {
             @Override
             public void onNext(Object object) {
                 WritableMap newAction = Arguments.createMap();
@@ -220,7 +222,8 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
         } else if (value instanceof String) {
             response.putString("payload", (String) value);
         } else if (value instanceof HashMap) {
-            response.putString("payload", convertHashMapToMap(response));
+            // if we upgrade react, we can just `writeMap` instead of having to convert it
+            response.putMap("payload", convertHashMapToMap((Map<String, Object>) value));
         }
 
         return response;
@@ -282,5 +285,73 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
         }
 
         return jsonArray;
+    }
+
+    private WritableMap convertHashMapToMap(Map<String, Object> hashMap) {
+        WritableMap writableMap = Arguments.createMap();
+
+        for (Map.Entry<String, Object> entry : hashMap.entrySet()) {
+            String key = entry.getKey();
+            Object value = entry.getValue();
+
+            if (value == null) {
+                writableMap.putNull(key);
+            } else if (value instanceof Boolean) {
+                writableMap.putBoolean(key, (Boolean) value);
+            } else if (value instanceof Double) {
+                writableMap.putDouble(key, (Double) value);
+            } else if (value instanceof Integer) {
+                writableMap.putInt(key, (Integer) value);
+            } else if (value instanceof String) {
+                writableMap.putString(key, (String) value);
+            } else if (value instanceof Map) {
+                writableMap.putMap(key, convertHashMapToMap((Map) value));
+            } else if (value instanceof List) {
+                writableMap.putArray(key, convertArrayToArrayList((List) value));
+            }
+        }
+
+        return writableMap;
+    }
+
+    private WritableArray convertArrayToArrayList(List list) {
+        WritableArray writableArray = Arguments.createArray();
+
+        if (list.size() < 1) {
+            return writableArray;
+        }
+
+        Object firstObject = list.get(0);
+        if (firstObject == null) {
+            for (int i = 0; i < list.size(); i++) {
+                writableArray.pushNull();
+            }
+        } else if (firstObject instanceof Boolean) {
+            for (Object object : list) {
+                writableArray.pushBoolean((boolean) object);
+            }
+        } else if (firstObject instanceof Double) {
+            for (Object object : list) {
+                writableArray.pushDouble((double) object);
+            }
+        } else if (firstObject instanceof Integer) {
+            for (Object object : list) {
+                writableArray.pushInt((int) object);
+            }
+        } else if (firstObject instanceof String) {
+            for (Object object : list) {
+                writableArray.pushString((String) object);
+            }
+        } else if (firstObject instanceof Map) {
+            for (Object object : list) {
+                writableArray.pushMap(convertHashMapToMap((Map) object));
+            }
+        } else if (firstObject instanceof List) {
+            for (Object object : list) {
+                writableArray.pushArray(convertArrayToArrayList((List) object));
+            }
+        }
+
+        return writableArray;
     }
 }
