@@ -52,7 +52,7 @@ repositories {
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    compile("com.boundlessgeo.spatialconnect:spatialconnect:0.11.3") {
+    compile("com.boundlessgeo.spatialconnect:spatialconnect:0.11.5") {
       exclude module: 'support-v4'
     }
 }
