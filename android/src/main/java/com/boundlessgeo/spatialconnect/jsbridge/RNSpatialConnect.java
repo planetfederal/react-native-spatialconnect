@@ -209,7 +209,7 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
             type = type + "_error";
         }
 
-        Log.v(LOG_TAG, "JS --> sdk: " + type + " :: " + newAction.toString());
+        Log.v(LOG_TAG, "JS <-- sdk: " + type + " :: " + newAction.toString());
 
         reactContext.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class).emit(type, newAction);
     }
