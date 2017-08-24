@@ -302,6 +302,8 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
                 writableMap.putDouble(key, (Double) value);
             } else if (value instanceof Integer) {
                 writableMap.putInt(key, (Integer) value);
+            } else if (value instanceof Long) {
+                writableMap.putDouble(key, (Long) value);
             } else if (value instanceof String) {
                 writableMap.putString(key, (String) value);
             } else if (value instanceof Map) {
@@ -337,6 +339,10 @@ public class RNSpatialConnect extends ReactContextBaseJavaModule {
         } else if (firstObject instanceof Integer) {
             for (Object object : list) {
                 writableArray.pushInt((int) object);
+            }
+        } else if (firstObject instanceof Long) {
+            for (Object object : list) {
+                writableArray.pushDouble((long) object);
             }
         } else if (firstObject instanceof String) {
             for (Object object : list) {
