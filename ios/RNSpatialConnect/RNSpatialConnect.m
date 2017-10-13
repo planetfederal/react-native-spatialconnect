@@ -31,6 +31,14 @@ RCT_EXPORT_METHOD(addConfigFilepath:(NSString *)p)
   [sc.configService addConfigFilepath:cfgPath];
 }
 
+RCT_EXPORT_METHOD(addConfig:(NSDictionary *)d)
+{
+  SCConfig *cfg = [[SCConfig alloc] initWithDictionary:d];
+  [[[SpatialConnect sharedInstance] serviceRunning:[SCConfigService serviceId]]
+   subscribeNext:^(id value) {
+     [sc.configService loadConfig:cfg];
+  }];
+}
 
 RCT_EXPORT_METHOD(bindMapView:(nonnull NSNumber *)reactTag callback:(RCTResponseSenderBlock)callback)
 {
