@@ -8,11 +8,11 @@ def isCi = "true".equals(System.getenv("CI"))
 def preDexEnabled = "true".equals(System.getProperty("pre-dex", "true"))
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
     defaultConfig {
-        minSdkVersion 16
-        targetSdkVersion 25
+        minSdkVersion 19
+        targetSdkVersion 26
         versionCode 1
         versionName "0.8"
         multiDexEnabled = true
@@ -45,14 +45,13 @@ android {
 repositories {
     jcenter()
     mavenCentral()
-    maven {
-        url "https://repo.eclipse.org/content/repositories/paho-releases/"
-    }
+    maven { url "https://repo.eclipse.org/content/repositories/paho-releases/" }
+    maven { url "https://maven.google.com" }
 }
 
 dependencies {
     compile 'com.facebook.react:react-native:+'
-    compile("com.boundlessgeo.spatialconnect:spatialconnect:0.11.5") {
+    compile("com.boundlessgeo.spatialconnect:spatialconnect:0.11.6") {
       exclude module: 'support-v4'
     }
 }
