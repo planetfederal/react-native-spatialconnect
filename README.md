@@ -15,7 +15,7 @@ npm install react-native-spatialconnect --save
 
 > Note: this may take a few minutes to download and compile all the dependencies.
 
-**iOS:**
+###iOS:
 * Open your React Native iOS project in Xcode.
 * Drag `RNSpatialConnect.xcodeproj` located in `.node_modules/react-native-spatialconnect/ios`
   to the `Libraries` folder of your project in Xcode.
@@ -36,7 +36,7 @@ npm install react-native-spatialconnect --save
     * `$(SRCROOT)/../node_modules/react-native-spatialconnect/ios/Carthage/Build/iOS/CocoaLumberjack.framework`
 * Minimal supported version of iOS is 8.0
 
-**Android:**
+###Android:
 * Modify `settings.gradle` located in `./android` folder.
   * Add the following:
     * `include ':react-native-spatialconnect'`
