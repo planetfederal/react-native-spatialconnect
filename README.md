@@ -1,6 +1,6 @@
 # react-native-spatialconnect
 
-react-native-spatialconnect is Javascript library used to integrate SpatialConnect with your React Native applications. 
+react-native-spatialconnect is Javascript library used to integrate [SpatialConnect](https://github.com/boundlessgeo/spatialconnect) with your React Native applications. 
 
 ## Prerequisites 
 For iOS, you need to have [Carthage](https://github.com/Carthage/Carthage) and [Xcode](https://developer.apple.com/xcode/) installed on your system. 
@@ -17,7 +17,7 @@ npm install react-native-spatialconnect --save
 
 ### iOS:
 * Open your React Native iOS project in Xcode.
-* Drag `RNSpatialConnect.xcodeproj` located in `.node_modules/react-native-spatialconnect/ios`
+* Drag `RNSpatialConnect.xcodeproj` located in `<your-project>/node_modules/react-native-spatialconnect/ios`
   to the `Libraries` folder of your project in Xcode.
 * In the `General` settings tab of your app under `Linked Frameworks and Libraries`, add `libRNSpatialConnect.a`.
 * In `Build Settings`/`Search Paths`/`Framework Search Paths` add path: `$(SRCROOT)/../node_modules/react-native-spatialconnect/ios/Carthage/Build/iOS` for Any Architecture | Any SDK for Debug and Release
@@ -37,10 +37,10 @@ npm install react-native-spatialconnect --save
 * Minimal supported version of iOS is 8.0
 
 ### Android:
-* Modify `settings.gradle` located in `./android` folder.
+* Modify `settings.gradle` located in `<your-project>/android` folder.
   * Add the following:
     * `include ':react-native-spatialconnect'`
     * `project(':react-native-spatialconnect').projectDir = new File(rootProject.projectDir,'../node_modules/react-native-spatialconnect/android')`
-* Modify `build.gradle` located in `./android/app` folder.
+* Modify `build.gradle` located in `<your-project>/android/app` folder.
   * Add the following under the dependencies:
     * `compile project(':react-native-spatialconnect')`
