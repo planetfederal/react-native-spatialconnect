@@ -123,18 +123,18 @@ Example of a .scfg file that defines its datastores (geopackage and geojson) and
 }
 ```
 
-Import spatialconnect for usage in your application
+**Import spatialconnect for usage in your application**
 
 ```
 import * as sc from 'react-native-spatialconnect';
 ```
 
-Initialize spatialconnect library
+**Initialize spatialconnect library**
 ```
 sc.startAllServices();
 ```
 
-Grab the form(s) from the spatialconnect
+**Grab the form(s) from the spatialconnect**
 
 ```
 sc.forms$().take(1).subscribe((action) => {
@@ -142,7 +142,7 @@ sc.forms$().take(1).subscribe((action) => {
 });
 ```
 
-Display list of defined datastores
+**Display list of defined datastores**
 ```
 sc.stores$()
   .map(action => action.payload)
@@ -150,7 +150,8 @@ sc.stores$()
 
   });
 ```
-Create a feature for a the form store
+
+**Create a feature for a the form store**
 ```
 const gj = {
   geometry: {
@@ -166,8 +167,11 @@ const f = sc.geometry('FORM_STORE', formInfo.form_key, gj);
 sc.createFeature$(f).first().subscribe(this.formSubmitted.bind(this));
 ```
 
-Query for features
+**Query for features**
 ```
+const bbox = [-180, -90, 180, 90];
+const limit = 50
+const filter = sc.filter().geoBBOXContains(bbox).limit(limit);
 sc.spatialQuery$(filter, state.map.activeStores)
   .bufferWithTime(1000)
   .take(5)
@@ -180,14 +184,33 @@ sc.spatialQuery$(filter, state.map.activeStores)
   });
 ```
 
-Update feature
+**Update feature**
 ```
 sc.updateFeature$(newFeature);
 ```
 
-Delete feature
+**Delete feature**
 
-Enable location tracking
+**Enable location tracking**
+```
+  if (Platform.OS === 'android' && Platform.Version >= 23) {
+    try {
+      const granted = PermissionsAndroid.requestPermission(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
+          title: 'GPS permission',
+          message: 'EFC needs access to your GPS',
+        },
+      );
+      if (granted) {
+        sc.enableGPS();
+      }
+    } catch (err) {
+      console.warn(err);
+    }
+  } else {
+    sc.enableGPS();
+  }
+```
 
 
 
