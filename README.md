@@ -44,3 +44,150 @@ npm install react-native-spatialconnect --save
 * Modify `build.gradle` located in `./android/app` folder.
   * Add the following under the dependencies:
     * `compile project(':react-native-spatialconnect')`
+
+## Usage
+
+This native modules relies on a config files to define forms and data stores locally or form a remote server.  The config file are defined in the native folders of your project.  For iOS `<your-project-name>/ios/config.scfg`, for android `<your-project-name>/android/app/src/main/res/raw/config.scfg`
+
+Example of a .scfg file that point to a remote server for authentication and defintion of forms and stores.
+```
+{
+  "remote": {
+    "auth": "server",
+    "http_protocol": "http",
+    "http_host": "efc-dev.boundlessgeo.com",
+    "http_port": 8085,
+    "mqtt_protocol": "tcp",
+    "mqtt_host": "efc-dev.boundlessgeo.com",
+    "mqtt_port": 1883
+  }
+}
+``` 
+
+Example of a .scfg file that defines its datastores (geopackage and geojson) and a form without using a remote server.
+```
+{
+  "stores":[
+    {
+      "store_type": "geojson",
+      "version": "1",
+      "uri": "https://s3.amazonaws.com/test.spacon/bars.geojson",
+      "id":"3dc5afc9-393b-444c-8581-582e2c2d98a3",
+      "name":"bars",
+      "default_layers": [ ],
+      "style": [
+        {
+            "id":"default",
+            "paint":
+                {
+                    "fill-color":"#34fb71",
+                    "fill-opacity":0.3,
+                    "line-color":"#4357fb",
+                    "line-opacity":1,
+                    "icon-color":"#3371fb"
+                }
+        }]
+    },
+    {
+      "id": "c96c0155-31b3-434a-8171-beb36fb24512",
+      "store_type": "gpkg",
+      "version": "1",
+      "uri": "https://s3.amazonaws.com/test.spacon/haiti4mobile.gpkg",
+      "name": "Haiti",
+      "default_layers": [ ]
+    }
+  ],
+  "forms":[
+    {
+      "id":2,
+      "version":0,
+      "form_key":"baseball_team",
+      "form_label":"Baseball Team",
+      "fields":[
+        {
+          "id":13,
+          "type":"string",
+          "field_label":"Favorite?",
+          "field_key":"team","position":0
+        },
+        {
+          "id":14,
+          "type":"string",
+          "field_label":"Why?",
+          "field_key":"why",
+          "position":1
+        }
+      ]
+    }
+  ]
+}
+```
+
+Import spatialconnect for usage in your application
+
+```
+import * as sc from 'react-native-spatialconnect';
+```
+
+Initialize spatialconnect library
+```
+sc.startAllServices();
+```
+
+Grab the form(s) from the spatialconnect
+
+```
+sc.forms$().take(1).subscribe((action) => {
+  this.props.dispatch(action);
+});
+```
+
+Display list of defined datastores
+```
+sc.stores$()
+  .map(action => action.payload)
+  .subscribe((data) => {
+
+  });
+```
+Create a feature for a the form store
+```
+const gj = {
+  geometry: {
+    type: 'Point',
+    coordinates: [
+      position.coords.longitude,
+      position.coords.latitude,
+    ],
+  },
+  properties: formData,
+};
+const f = sc.geometry('FORM_STORE', formInfo.form_key, gj);
+sc.createFeature$(f).first().subscribe(this.formSubmitted.bind(this));
+```
+
+Query for features
+```
+sc.spatialQuery$(filter, state.map.activeStores)
+  .bufferWithTime(1000)
+  .take(5)
+  .map(actions => actions.map(a => a.payload))
+  .subscribe((featureChunk) => {
+    dispatch({
+      type: 'ADD_FEATURES',
+      payload: { featureChunk },
+    });
+  });
+```
+
+Update feature
+```
+sc.updateFeature$(newFeature);
+```
+
+Delete feature
+
+Enable location tracking
+
+
+
