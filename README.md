@@ -47,7 +47,7 @@ npm install react-native-spatialconnect --save
 
 ## Usage
 
-This native modules relies on a config files to define forms and data stores locally or form a remote server.  The config file are defined in the native folders of your project.  For iOS `<your-project-name>/ios/config.scfg`, for android `<your-project-name>/android/app/src/main/res/raw/config.scfg`
+This native modules relies on a config files to define forms and data stores locally or from a remote server.  The config file are defined in the native folders of your project.  For iOS `<your-project-name>/ios/config.scfg`, for android `<your-project-name>/android/app/src/main/res/raw/config.scfg`
 
 Example of a .scfg file that point to a remote server for authentication and defintion of forms and stores.
 ```
@@ -137,21 +137,23 @@ sc.startAllServices();
 **Grab the form(s) from the spatialconnect**
 
 ```
-sc.forms$().take(1).subscribe((action) => {
-  this.props.dispatch(action);
-});
+sc.forms$()..subscribe(
+  (formsArray) => {
+    setState({forms:formsArray});
+  }
+);
 ```
 
 **Display list of defined datastores**
 ```
-sc.stores$()
-  .map(action => action.payload)
-  .subscribe((data) => {
-
-  });
+sc.stores$().subscribe(
+  (storesArray) => {
+    setState({stores:storesArray});
+  }
+);
 ```
 
-**Create a feature for a the form store**
+**Create a feature for the form store**
 ```
 const gj = {
   geometry: {
@@ -161,7 +163,9 @@ const gj = {
       position.coords.latitude,
     ],
   },
-  properties: formData,
+  properties: {
+    team: 'foo', why: 'bar'
+  },
 };
 const f = sc.geometry('FORM_STORE', formInfo.form_key, gj);
 sc.createFeature$(f).first().subscribe(this.formSubmitted.bind(this));
@@ -172,44 +176,62 @@ sc.createFeature$(f).first().subscribe(this.formSubmitted.bind(this));
 const bbox = [-180, -90, 180, 90];
 const limit = 50
 const filter = sc.filter().geoBBOXContains(bbox).limit(limit);
-sc.spatialQuery$(filter, state.map.activeStores)
+sc.spatialQuery$(filter)
   .bufferWithTime(1000)
   .take(5)
-  .map(actions => actions.map(a => a.payload))
-  .subscribe((featureChunk) => {
-    dispatch({
-      type: 'ADD_FEATURES',
-      payload: { featureChunk },
-    });
+  .subscribe((data) => {
+    //do something with the data
   });
 ```
 
 **Update feature**
 ```
-sc.updateFeature$(newFeature);
+let modifiedFeature = {
+  geometry: {
+    type: 'Point',
+    coordinates: [
+      position.coords.longitude,
+      position.coords.latitude,
+    ],
+  },
+  properties: {
+    team: 'foo', why: 'bar'
+  },
+};
+sc.updateFeature$(modifiedFeature);
 ```
 
 **Delete feature**
+```
+sc.deleteFeature(feature.id);
+```
 
 **Enable location tracking**
 ```
-  if (Platform.OS === 'android' && Platform.Version >= 23) {
-    try {
-      const granted = PermissionsAndroid.requestPermission(
-        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
-          title: 'GPS permission',
-          message: 'EFC needs access to your GPS',
-        },
-      );
-      if (granted) {
-        sc.enableGPS();
-      }
-    } catch (err) {
-      console.warn(err);
+if (Platform.OS === 'android' && Platform.Version >= 23) {
+  try {
+    const granted = PermissionsAndroid.requestPermission(
+      PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION, {
+        title: 'GPS permission',
+        message: 'EFC needs access to your GPS',
+      },
+    );
+    if (granted) {
+      sc.enableGPS();
     }
-  } else {
-    sc.enableGPS();
+  } catch (err) {
+    console.warn(err);
   }
+} else {
+  sc.enableGPS();
+}
+```
+
+**Get last known location**
+```
+sc.lastKnownLocation().subscribe(
+  (loc) => { console.log(loc); }
+);
 ```
 
 
