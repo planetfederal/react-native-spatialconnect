@@ -167,8 +167,11 @@ const gj = {
     team: 'foo', why: 'bar'
   },
 };
-const f = sc.geometry('FORM_STORE', formInfo.form_key, gj);
-sc.createFeature$(f).first().subscribe(this.formSubmitted.bind(this));
+const layer_name = 'some_layer';
+const f = sc.geometry('FORM_STORE', layer_name, gj);
+sc.createFeature$(f).first().subscribe(
+  //after feature is added do something
+);
 ```
 
 **Query for features**
